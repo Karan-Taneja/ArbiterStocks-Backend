@@ -16,13 +16,13 @@ StockService.getOpeningStockPrice = (symbol) => {
     });
 };
 
-StockService.getStockBySymbol = (symbol) => db.one('SELECT * FROM stocks WHERE symbol = $[symbol]', { symbol });
+StockService.getStockBySymbol = (symbol) => db.oneOrNone('SELECT * FROM stocks WHERE symbol = $[symbol]', { symbol });
 StockService.getAllStocks = () => db.any('SELECT symbol, company FROM stocks');
 StockService.getAllStockData = () => db.any('SELECT * FROM stocks');
 
 StockService.updateStock = (symbol, open_price) => {
   const now = new Date();
-  return db.any(`UPDATE stocks SET open_price = $[open_price], updated = $[now] WHERE symbol = $[symbol] RETURNING *`, { symbol, open_price, now })
+  return db.oneOrNone(`UPDATE stocks SET open_price = $[open_price], updated = $[now] WHERE symbol = $[symbol] RETURNING *`, { symbol, open_price, now })
 };
 
 StockService.updateAllStocks = async () => {
@@ -63,7 +63,7 @@ StockService.populateStocks = () => {
         if(!open_price) continue;
         const sql = `INSERT INTO stocks (symbol, stock_type, company, currency, region, logo, open_price, updated) 
         VALUES ($[symbol], $[type], $[name], $[currency], $[region], $[logo], $[open_price], $[now]) RETURNING id`;
-        const id = await db.any(sql, { symbol, type, name, currency, region, logo, open_price, now });
+        const id = await db.oneOrNone(sql, { symbol, type, name, currency, region, logo, open_price, now });
         console.log(id);
       };
     })
