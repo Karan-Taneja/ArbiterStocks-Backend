@@ -18,6 +18,8 @@ StockService.getOpeningStockPrice = (symbol) => {
 
 StockService.getStockBySymbol = (symbol) => db.one('SELECT * FROM stocks WHERE symbol = $[symbol]', { symbol });
 StockService.getAllStocks = () => db.any('SELECT symbol, company FROM stocks');
+StockService.getAllStockData = () => db.any('SELECT * FROM stocks');
+
 StockService.updateStock = (symbol, open_price) => {
   const now = new Date();
   return db.any(`UPDATE stocks SET open_price = $[open_price], updated = $[now] WHERE symbol = $[symbol] RETURNING *`, { symbol, open_price, now })
