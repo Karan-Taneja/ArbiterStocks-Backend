@@ -32,7 +32,18 @@ stockRouter.get('/populate', (req, res, next) => {
     });
 });
 
-stockRouter.get('/:symbol', (req, res, next ) => {
+stockRouter.get('/id/:id', (req, res, next) => {
+  const { id } = req.params;
+  StockService.getStockById(id)
+    .then(stock => {
+      res.json({'stock': stock});
+    })
+    .catch(err => {
+      res.status(404).json({'err': err});
+    });
+});
+
+stockRouter.get('/symbol/:symbol', (req, res, next ) => {
   const { symbol } = req.params;
   StockService.getStockBySymbol(symbol)
     .then(stock => {

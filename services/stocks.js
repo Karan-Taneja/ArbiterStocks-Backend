@@ -15,7 +15,7 @@ StockService.getOpeningStockPrice = (symbol) => {
       console.log(err);
     });
 };
-
+StockService.getStockById = (id) => db.oneOrNone('SELECT * FROM stocks WHERE id=$[id]', { id });
 StockService.getStockBySymbol = (symbol) => db.oneOrNone('SELECT * FROM stocks WHERE symbol = $[symbol]', { symbol });
 StockService.getAllStocks = () => db.any('SELECT symbol, company FROM stocks');
 StockService.getAllStockData = () => db.any('SELECT * FROM stocks');
