@@ -22,6 +22,16 @@ stockRouter.get('/all', (req, res, next) => {
     });
 });
 
+stockRouter.get('/update', (res, res, next) => {
+  StockService.updateAllStocks()
+    .then(() => {
+      res.json({'success': true});
+    })
+    .catch(err => {
+      res.status(404).json({'err': err});
+    });
+});
+
 stockRouter.get('/populate', (req, res, next) => {
   StockService.populateStocks()
     .then(() => {
