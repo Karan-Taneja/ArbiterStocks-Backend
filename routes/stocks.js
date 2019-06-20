@@ -22,7 +22,7 @@ stockRouter.get('/all', (req, res, next) => {
     });
 });
 
-stockRouter.get('/update', (res, res, next) => {
+stockRouter.get('/update', (req, res, next) => {
   StockService.updateAllStocks()
     .then(() => {
       res.json({'success': true});
