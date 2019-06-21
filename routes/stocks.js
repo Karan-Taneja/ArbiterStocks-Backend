@@ -42,8 +42,8 @@ stockRouter.get('/all', (req, res, next) => {
 
 stockRouter.get('/update', (req, res, next) => {
   StockService.updateAllStocks()
-    .then(stocks => {
-      res.json({'stocks': stocks});
+    .then(() => {
+      res.json({'success': true});
     })
     .catch(err => {
       res.status(404).json({'err': err});
