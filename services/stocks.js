@@ -26,21 +26,18 @@ StockService.updateStock = (symbol, open_price) => {
 };
 
 StockService.updateAllStocks = async () => {
-  return StockService.getAllStocks()
+  StockService.getAllStocks()
     .then(async stocks => {
-      const nuStocks = [];
       for(let stock of stocks){
         const symbol = stock.symbol;
         try{
           const open_price = await StockService.getOpeningStockPrice(symbol);
           const nuStock = await StockService.updateStock(symbol, open_price);
-          nuStocks.push(nuStock);
         }
         catch(err) {
           console.log(err);
         };
       };
-      return nuStocks;
     })
     .catch(err => {
       console.log(err);
