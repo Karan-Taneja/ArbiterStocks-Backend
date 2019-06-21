@@ -31,7 +31,7 @@ StockService.updateAllStocks = async () => {
       for(let stock of stocks){
         const symbol = stock.symbol;
         try{
-          const open_price = await StockService.getOpeningStockPrice(symbol);
+          const open_price = await StockService.getOpeningStockPrice(encodeURI(symbol));
           const nuStock = await StockService.updateStock(symbol, open_price);
         }
         catch(err) {
@@ -81,5 +81,4 @@ StockService.populateStocks = () => {
     .catch(err => {
       console.log(err);
     });
-}
-
+};
