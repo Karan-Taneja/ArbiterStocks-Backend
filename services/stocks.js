@@ -26,17 +26,24 @@ StockService.updateStock = (symbol, open_price) => {
 };
 
 StockService.updateAllStocks = async () => {
-  StockService.getAllStocks()
-    .then(async symbols => {
-      for(let symbol of symbols){
+  return StockService.getAllStocks()
+    .then(async stocks => {
+      let count = 0;
+      const nuStocks = [];
+      for(let stock of stocks){
+        if(count > 0) break;
+        const symbol = stock.symbol;
         try{
           const open_price = await StockService.getOpeningStockPrice(symbol);
-          await StockService.updateStock(symbol, open_price);
+          const nuStock = await StockService.updateStock(symbol, open_price);
+          nuStocks.push(nuStock);
         }
         catch(err) {
           console.log(err);
         };
+        count++;
       };
+      return nuStocks;
     })
     .catch(err => {
       console.log(err);
