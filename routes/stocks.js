@@ -15,6 +15,12 @@ stockRouter.get('/alldata', (req, res, next) => {
 stockRouter.get('/all', (req, res, next) => {
   StockService.getAllStocks()
     .then(stocks => {
+      const symbolList = {};
+      for(let stock of stocks){
+        symbolList[stock.symbol] = {
+          'company': stock.company
+        };
+      };
       res.json({'stocks': stocks});
     })
     .catch(err => {
