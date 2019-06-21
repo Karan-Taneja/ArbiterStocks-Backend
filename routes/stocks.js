@@ -5,7 +5,18 @@ const stockRouter = express.Router();
 stockRouter.get('/alldata', (req, res, next) => {
   StockService.getAllStockData()
     .then(stocks => {
-      res.json({'stocks': stocks});
+      const stockList = {};
+      for(let stock of stocks){
+        console.log(stock)
+        stockList[stock.symbol] = {
+          'company': stock.company,
+          'open_price': stock.open_price,
+          'stock_type': stock.stock_type,
+          'currency': stock.currency,
+          'region': stock.region,
+        };
+      };
+      res.json({'stocks': stockList});
     })
     .catch(err => {
       res.status(404).json({'err': err});
@@ -17,11 +28,12 @@ stockRouter.get('/all', (req, res, next) => {
     .then(stocks => {
       const symbolList = {};
       for(let stock of stocks){
+        console.log(stock)
         symbolList[stock.symbol] = {
           'company': stock.company
         };
       };
-      res.json({'stocks': stocks});
+      res.json({'stocks': symbolList});
     })
     .catch(err => {
       res.status(404).json({'err': err});
