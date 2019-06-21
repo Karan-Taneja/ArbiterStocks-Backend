@@ -9,6 +9,7 @@ stockRouter.get('/alldata', (req, res, next) => {
       for(let stock of stocks){
         console.log(stock)
         stockList[stock.symbol] = {
+          'id': stock.id,
           'company': stock.company,
           'open_price': stock.open_price,
           'stock_type': stock.stock_type,
