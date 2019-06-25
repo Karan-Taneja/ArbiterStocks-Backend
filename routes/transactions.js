@@ -4,8 +4,8 @@ const transactionRouter = express.Router();
 
 transactionRouter.post('/', (req, res, next) => {
   const { user_id } = req.query;
-  const { stock_id, quantity, price_per_stock } = req.body;
-  TransactionService.addTransaction(user_id, stock_id, quantity, price_per_stock)
+  const { stock_id, quantity, price_per_stock, transaction_type } = req.body;
+  TransactionService.addTransaction(user_id, stock_id, quantity, price_per_stock, transaction_type)
     .then(transaction => {
       res.json({'transaction': transaction});
     })

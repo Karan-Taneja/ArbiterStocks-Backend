@@ -47,5 +47,6 @@ CREATE TABLE transactions (
   quantity INT NOT NULL,
   price_per_stock NUMERIC NOT NULL,
   total_price NUMERIC NOT NULL,
-  transaction_date TIMESTAMP NOT NULL
+  transaction_date TIMESTAMP NOT NULL,
+  transaction_type VARCHAR NOT NULL
 );
